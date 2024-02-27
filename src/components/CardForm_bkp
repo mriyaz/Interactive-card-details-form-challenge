@@ -1,0 +1,105 @@
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import bgCardFront from '../images/bg-card-front.png';
+import bgCardback from '../images/bg-card-back.png';
+import ICardDetails from '../types';
+
+const CardForm = () => {
+    const [cardDetails, setCardDetails] = useState<ICardDetails>({
+        cardNumber: '',
+        name: '',
+        expiryMonth: '',
+        expiryYear: '',
+        cvc: '',
+    })
+
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        navigate('/completion', { state: { cardDetails } });
+    }
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setCardDetails({ ...cardDetails, [name]: value })
+    }
+
+    return (
+        <div className='font-custom '>
+            {/* Header Images */}
+            <div className="relative h-64 bg-mobile-img">
+
+                {/* Back of the Card */}
+                <div className='w-3/4 absolute right-5 top-10'>
+                    <img src={bgCardback} alt="Card back bg" className="w-full h-full object-cover" />
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                        <span className="text-gray-200 text-xs ml-40">000</span>
+                    </div>
+                </div>
+                {/* Front of the Card */}
+                <div className='w-3/4 absolute  left-5 -bottom-8  shadow-darkGrayishViolet shadow-md rounded-lg '>
+                    <img src={bgCardFront} alt="Card front bg" className="w-full h-full object-cover" />
+                    <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between p-5 text-gray-300">
+
+                        <div className="flex gap-3 items-center" >
+                            <div className=" bg-gray-100 w-7 h-7 rounded-full"></div>
+                            <div className="w-4 h-4 rounded-full border-2 border-gray-300"></div>
+                        </div>
+                        <br />
+                        <div className="flex justify-between">
+                            <span className="text-lg tracking-widest">0000</span>
+                            <span className="text-lg tracking-widest">0000</span>
+                            <span className="text-lg tracking-widest">0000</span>
+                            <span className="text-lg tracking-widest">0000</span>
+                        </div>
+
+                        <div className="flex justify-between text-xs">
+                            <span >JANE APPLESEED </span>
+                            <span >00/00 </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* form */}
+            <form onSubmit={handleSubmit} className='py-10 text-sm space-y-4 bg-white my-10 px-5'>
+                {/* Card Holder Name */}
+                <div>
+                    <label htmlFor="name" className='block pb-1'>CARDHOLDER NAME</label>
+                    <input type="text" name="name" id="name" className='border-2 w-full px-2 py-3 rounded-md text-base' placeholder='e.g. Jane Appleseed' value={cardDetails.name} onChange={handleChange} />
+                </div>
+
+                {/* Card Number */}
+                <div>
+                    <label htmlFor="cardNumber" className='block pb-1'>CARD NUMBER</label>
+                    <input type="number" name="cardNumber" id="cardNumber" className='border-2 w-full px-2 py-3 rounded-md text-base' placeholder='e.g. 1234 5678 9123 0000' value={cardDetails.cardNumber} onChange={handleChange} />
+                </div>
+
+                <div className="flex gap-10">
+                    {/* Card Expiry Month & Year */}
+                    <div>
+                        <label htmlFor="expdate" className='block pb-1'>EXP. DATE (MM/YY)</label>
+
+                        <div className="flex gap-3">
+                            <input type="text" name="expiryMonth" id="expiryMonth" className='w-20 border-2  px-2 py-3 rounded-md text-base text-center' placeholder='MM' maxLength={2} inputMode="numeric" pattern="(0[1-9]|1[0-2])" value={cardDetails.expiryMonth} onChange={handleChange} />
+
+                            <input type="text" name="expiryYear" id="expiryYear" className='w-20 border-2  px-2 py-3 rounded-md text-base text-center' placeholder='YY' maxLength={2} inputMode="numeric" pattern="(2[0-9])" value={cardDetails.expiryYear} onChange={handleChange} />
+                        </div>
+                    </div>
+
+                    {/* Card CVC */}
+                    <div>
+                        <label htmlFor="cvc" className='block pb-1'>CVC</label>
+                        <input type="text" name="cvc" id="cvc" className='w-full border-2  px-2 py-3 rounded-md text-base' placeholder='123' maxLength={3} inputMode="numeric" value={cardDetails.cvc} onChange={handleChange} />
+                    </div>
+                </div>
+
+                <button type='submit' className='w-full text-white bg-black py-3 rounded-md text-base'>Confirm</button>
+            </form>
+        </div>
+    )
+}
+
+export default CardForm
