@@ -34,7 +34,7 @@ Users should be able to:
 ### Links
 
 - [Solution URL](https://github.com/mriyaz/interactive-card-details-form-challenge)
-- [Live Site URL](https://interactive-card-details-form-challenge-lyart.vercel.app/)
+- [Live Site URL](https://interactive-card-details-form-challenge-tau.vercel.app/)
 
 ## My process
 
